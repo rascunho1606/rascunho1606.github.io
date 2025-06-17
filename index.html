@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nosso Jardim Digital do Amor 💕</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #87CEEB 0%, #98D8E8 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Nuvens flutuantes */
+        .nuvens-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .nuvem {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 4em;
+            animation: passarNuvem 20s infinite linear;
+        }
+
+        .nuvem:nth-child(1) {
+            top: 10%;
+            animation-delay: 0s;
+            animation-duration: 25s;
+        }
+
+        .nuvem:nth-child(2) {
+            top: 30%;
+            animation-delay: -8s;
+            animation-duration: 30s;
+        }
+
+        .nuvem:nth-child(3) {
+            top: 50%;
+            animation-delay: -15s;
+            animation-duration: 22s;
+        }
+
+        .nuvem:nth-child(4) {
+            top: 70%;
+            animation-delay: -5s;
+            animation-duration: 28s;
+        }
+
+        @keyframes passarNuvem {
+            0% {
+                transform: translateX(-200px);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateX(calc(100vw + 200px));
+                opacity: 0;
+            }
+        }
+
+        .jardim-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            cursor: pointer;
+        }
+
+        .header {
+            text-align: center;
+            padding: 20px;
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 10;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: pulsar 2s infinite;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        @keyframes pulsar {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .area-grama {
+            position: absolute;
+            bottom: -250px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 50%;
+            background: 
+                radial-gradient(ellipse at center, #66BB6A 0%, #4CAF50 40%, #388E3C 100%);
+            border-radius: 25px;
+            border: 8px solid transparent;
+            background-clip: padding-box;
+            box-shadow: 
+                inset 0 0 50px rgba(255,255,255,0.2),
+                0 15px 40px rgba(0,0,0,0.3);
+            overflow: visible;
+            z-index: 2;
+            position: relative;
+            animation: ondulacaoGrama 4s infinite ease-in-out;
+        }
+
+        .area-grama.pulsar {
+            animation: pulsarGrama 0.6s ease-out, ondulacaoGrama 4s infinite ease-in-out;
+        }
+
+        @keyframes pulsarGrama {
+            0% { transform: translateX(-50%) scale(1); }
+            50% { transform: translateX(-50%) scale(1.05); box-shadow: 
+                inset 0 0 50px rgba(255,255,255,0.4),
+                0 15px 40px rgba(0,0,0,0.3); }
+            100% { transform: translateX(-50%) scale(1); }
+        }
+
+        @keyframes ondulacaoGrama {
+            0%, 100% { 
+                transform: translateX(-50%) scale(1) rotate(0deg);
+                filter: hue-rotate(0deg) brightness(1);
+            }
+            25% { 
+                transform: translateX(-50%) scale(1.01) rotate(0.3deg);
+                filter: hue-rotate(2deg) brightness(1.05);
+            }
+            50% { 
+                transform: translateX(-50%) scale(1.02) rotate(0deg);
+                filter: hue-rotate(0deg) brightness(1.1);
+            }
+            75% { 
+                transform: translateX(-50%) scale(1.01) rotate(-0.3deg);
+                filter: hue-rotate(-2deg) brightness(1.05);
+            }
+        }
+
+        .textura-grama {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 3px,
+                    rgba(46, 125, 50, 0.15) 3px,
+                    rgba(46, 125, 50, 0.15) 6px
+                ),
+                repeating-linear-gradient(
+                    45deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(102, 187, 106, 0.1) 2px,
+                    rgba(102, 187, 106, 0.1) 4px
+                );
+            opacity: 0.4;
+            animation: texturaMovimento 8s infinite ease-in-out;
+        }
+
+        @keyframes texturaMovimento {
+            0%, 100% { transform: translateX(0px) translateY(0px); }
+            25% { transform: translateX(2px) translateY(-1px); }
+            50% { transform: translateX(0px) translateY(2px); }
+            75% { transform: translateX(-2px) translateY(1px); }
+        }
+
+        .graminha {
+            position: absolute;
+            color: #2E7D32;
+            font-size: 1.5em;
+            animation: gramaBalanco 3s infinite ease-in-out;
+            pointer-events: none;
+            z-index: 4;
+        }
+
+        .graminha:nth-child(odd) {
+            animation-delay: -1s;
+            animation-duration: 4s;
+        }
+
+        .graminha:nth-child(even) {
+            animation-delay: -2s;
+            animation-duration: 3.5s;
+        }
+
+        @keyframes gramaBalanco {
+            0%, 100% { 
+                transform: rotate(0deg) scale(1);
+                filter: hue-rotate(0deg);
+            }
+            25% { 
+                transform: rotate(3deg) scale(1.02);
+                filter: hue-rotate(5deg);
+            }
+            50% { 
+                transform: rotate(0deg) scale(1.05);
+                filter: hue-rotate(0deg);
+            }
+            75% { 
+                transform: rotate(-3deg) scale(1.02);
+                filter: hue-rotate(-5deg);
+            }
+        }
+
+        /* Cerquinhas ao redor do gramado */
+        .cerquinha-container {
+            position: absolute;
+            top: -25px;
+            left: -25px;
+            right: -25px;
+            bottom: -25px;
+            pointer-events: none;
+            z-index: 3;
+        }
+
+        .cerquinha {
+            position: absolute;
+            font-size: 1.8em;
+            color: #8D6E63;
+            animation: cerquinhaBalanco 3s infinite ease-in-out;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .cerquinha:nth-child(odd) {
+            animation-delay: -0.5s;
+        }
+
+        .cerquinha:nth-child(even) {
+            animation-delay: -1.5s;
+        }
+
+        @keyframes cerquinhaBalanco {
+            0%, 100% { 
+                transform: rotate(0deg) translateY(0px);
+                opacity: 0.8;
+            }
+            50% { 
+                transform: rotate(2deg) translateY(-2px);
+                opacity: 1;
+            }
+        }
+
+        .contador {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 15px;
+            border-radius: 20px;
+            color: white;
+            font-weight: bold;
+            z-index: 100;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .flor {
+            position: absolute;
+            font-size: 3em;
+            cursor: pointer;
+            animation: crescer 0.8s ease-out, balançar 3s infinite ease-in-out;
+            z-index: 5;
+            transition: transform 0.3s ease;
+        }
+
+        .flor:hover {
+            transform: scale(1.3) rotate(10deg);
+        }
+
+        @keyframes crescer {
+            0% {
+                transform: scale(0) rotate(0deg);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1) rotate(360deg);
+                opacity: 1;
+            }
+        }
+
+        @keyframes balançar {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-5px) rotate(2deg); }
+            75% { transform: translateY(5px) rotate(-2deg); }
+        }
+
+        .mensagem {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            color: #333;
+            font-size: 1.3em;
+            max-width: 400px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            z-index: 1000;
+            opacity: 0;
+            animation: aparecerMensagem 0.5s ease-out forwards;
+        }
+
+        @keyframes aparecerMensagem {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .botao-fechar {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 1.5em;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .botao-fechar:hover {
+            color: #333;
+        }
+
+        .foto-secreta {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 100;
+            color: white;
+            font-size: 2em;
+        }
+
+        .foto-secreta:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 20px rgba(255, 255, 255, 0.3);
+        }
+
+        .foto-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+
+        .foto-modal img {
+            max-width: 80%;
+            max-height: 80%;
+            border-radius: 20px;
+            box-shadow: 0 10px 50px rgba(0,0,0,0.5);
+        }
+
+        .foto-placeholder {
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            border-radius: 20px;
+            font-size: 1.2em;
+        }
+
+        .instrucoes {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 15px;
+            border-radius: 15px;
+            color: white;
+            font-size: 0.9em;
+            max-width: 250px;
+            z-index: 100;
+        }
+
+        .coracao-flutuante {
+            position: absolute;
+            color: #ff6b6b;
+            font-size: 2em;
+            animation: flutuar 4s infinite ease-in-out;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes flutuar {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        }
+
+        .galinha {
+            position: absolute;
+            font-size: 3em;
+            cursor: pointer;
+            z-index: 6;
+            transition: transform 0.3s ease;
+        }
+
+        .galinha:hover {
+            transform: scale(1.2);
+        }
+
+        .risadinha {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 1.2em;
+            color: #333;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            z-index: 7;
+            animation: risadaAparecer 2s ease-out forwards;
+            pointer-events: none;
+        }
+
+        @keyframes risadaAparecer {
+            0% { opacity: 0; transform: translateY(0px) scale(0.8); }
+            20% { opacity: 1; transform: translateY(-20px) scale(1); }
+            80% { opacity: 1; transform: translateY(-30px) scale(1); }
+            100% { opacity: 0; transform: translateY(-40px) scale(0.8); }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2em; }
+            .header p { font-size: 1em; }
+            .mensagem { max-width: 90%; font-size: 1.1em; }
+            .instrucoes { max-width: 200px; font-size: 0.8em; }
+            .area-grama { width: 90%; height: 45%; }
+            .nuvem { font-size: 3em; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Nuvens de fundo -->
+    <div class="nuvens-container">
+        <div class="nuvem">☁️</div>
+        <div class="nuvem">☁️</div>
+        <div class="nuvem">☁️</div>
+        <div class="nuvem">☁️</div>
+    </div>
+
+    <div class="jardim-container" id="jardim">
+        <div class="header">
+            <h1>Jardim Digital Interativo 🌸</h1>
+            <p>Clique na área de grama para plantar flores!</p>
+        </div>
+
+        <div class="area-grama" id="areaGrama">
+            <div class="textura-grama"></div>
+            <div class="cerquinha-container" id="cerquinhaContainer"></div>
+        </div>
+
+        <div class="contador" id="contador">
+            🌸 Flores plantadas: <span id="numeroFlores">0</span><br>
+            🐔 Galinhas na grama: <span id="numeroGalinhas">0</span>
+        </div>
+
+        <div class="foto-secreta" id="fotoSecreta" title="Foto especial 📸">
+            📷
+        </div>
+
+        <div class="instrucoes">
+            💝 <strong>Instruções:</strong><br>
+            • Clique na grama para plantar flores<br>
+            • Clique nas flores para mensagens<br>
+            • Clique na câmera para foto<br>
+            • A cada 10 flores = 1 galinha! 🐔
+        </div>
+    </div>
+
+    <script>
+        // Configurações personalizáveis
+        const MENSAGENS_AMOR = [
+            "Que tal plantarmos mais flores juntos? 😊",
+            "Você tem um gosto ótimo para jardins! 🌻",
+            "Essas galinhas são hilárias, não acha? 😂",
+            "Adoro como esse jardim está ficando colorido! 🌈",
+            "Você é uma pessoa bem legal de conhecer 😄",
+            "Que tal descobrirmos mais coisas legais juntos? ✨",
+            "Sua criatividade com as flores é impressionante! 🎨",
+            "Ri muito com essas galinhas malucas 🐔😂",
+            "Você torna qualquer coisa mais divertida! 🎯",
+            "Gosto de compartilhar momentos assim com você 🌟",
+            "Que ideia genial esse jardim interativo! 💡",
+            "Você tem uma energia muito boa! ⚡"
+        ];
+
+        const FLORES_EMOJI = ['🌸', '🌺', '🌻', '🌷', '🌹', '💐', '🌼', '🌟', '💖', '💝'];
+        const GALINHAS_EMOJI = ['🐔', '🐓', '🐤', '🐣', '🐥'];
+        const RISADINHAS = ['hihi😁😋', 'hehe😄🤭', 'huhu😆😜', 'hihi😊😝', 'haha😁🥰'];
+        const CERQUINHAS_EMOJI = ['🍂', '🌳', '🐿️', '🌲', '🐞'];
+        
+        let contadorFlores = 0;
+        let contadorGalinhas = 0;
+        let mensagemAtual = null;
+        let galinhasAtivas = [];
+
+        // Função para verificar se o clique está na área de grama
+        function estaNaGrama(x, y) {
+            const areaGrama = document.getElementById('areaGrama');
+            const rect = areaGrama.getBoundingClientRect();
+            return x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom;
+        }
+
+        // Função para criar flores (só na grama)
+        function criarFlor(x, y) {
+            if (!estaNaGrama(x, y)) {
+                return; // Não cria flor fora da grama
+            }
+
+            const flor = document.createElement('div');
+            flor.className = 'flor';
+            flor.textContent = FLORES_EMOJI[Math.floor(Math.random() * FLORES_EMOJI.length)];
+            flor.style.left = x + 'px';
+            flor.style.top = y + 'px';
+            
+            // Adiciona evento de clique na flor
+            flor.addEventListener('click', (e) => {
+                e.stopPropagation();
+                mostrarMensagem();
+            });
+
+            document.getElementById('jardim').appendChild(flor);
+            
+            // Atualiza contador
+            contadorFlores++;
+            document.getElementById('numeroFlores').textContent = contadorFlores;
+
+            // Verifica se deve liberar uma galinha a cada 10 flores
+            if (contadorFlores % 10 === 0) {
+                setTimeout(() => criarGalinha(), 500);
+            }
+
+            // Remove flor após 15 segundos
+            setTimeout(() => {
+                if (flor.parentNode) {
+                    flor.style.animation = 'crescer 0.5s ease-out reverse';
+                    setTimeout(() => {
+                        if (flor.parentNode) {
+                            flor.parentNode.removeChild(flor);
+                        }
+                    }, 500);
+                }
+            }, 15000);
+        }
+
+        // Função para criar galinhas que ficam na área de grama
+        function criarGalinha() {
+            // Faz a área de grama pulsar
+            const areaGrama = document.getElementById('areaGrama');
+            areaGrama.classList.add('pulsar');
+            setTimeout(() => {
+                areaGrama.classList.remove('pulsar');
+            }, 600);
+
+            const galinha = document.createElement('div');
+            galinha.className = 'galinha';
+            galinha.textContent = GALINHAS_EMOJI[Math.floor(Math.random() * GALINHAS_EMOJI.length)];
+            
+            const rect = areaGrama.getBoundingClientRect();
+            
+            // Posição inicial aleatória dentro da grama
+            let x = rect.left + Math.random() * (rect.width - 60);
+            let y = rect.top + Math.random() * (rect.height - 60);
+            
+            galinha.style.left = x + 'px';
+            galinha.style.top = y + 'px';
+            
+            // Adiciona evento de clique na galinha
+            galinha.addEventListener('click', (e) => {
+                e.stopPropagation();
+                fazerGalinhaRir(galinha);
+            });
+
+            document.getElementById('jardim').appendChild(galinha);
+            
+            // Atualiza contador de galinhas
+            contadorGalinhas++;
+            document.getElementById('numeroGalinhas').textContent = contadorGalinhas;
+
+            // Adiciona à lista de galinhas ativas
+            const galinhaData = {
+                elemento: galinha,
+                x: x,
+                y: y,
+                vx: (Math.random() - 0.5) * 2, // Velocidade X
+                vy: (Math.random() - 0.5) * 2, // Velocidade Y
+                proximaRisada: Date.now() + Math.random() * 3000 + 2000
+            };
+            galinhasAtivas.push(galinhaData);
+
+            // Remove galinha após 30 segundos
+            setTimeout(() => {
+                const index = galinhasAtivas.findIndex(g => g.elemento === galinha);
+                if (index > -1) {
+                    galinhasAtivas.splice(index, 1);
+                }
+                if (galinha.parentNode) {
+                    galinha.parentNode.removeChild(galinha);
+                }
+                contadorGalinhas--;
+                document.getElementById('numeroGalinhas').textContent = contadorGalinhas;
+            }, 30000);
+        }
+
+        // Função para animar galinhas
+        function animarGalinhas() {
+            const areaGrama = document.getElementById('areaGrama');
+            const rect = areaGrama.getBoundingClientRect();
+            const agora = Date.now();
+
+            galinhasAtivas.forEach(galinha => {
+                // Atualiza posição
+                galinha.x += galinha.vx;
+                galinha.y += galinha.vy;
+
+                // Verifica colisão com bordas da grama e inverte direção
+                if (galinha.x <= rect.left || galinha.x >= rect.right - 60) {
+                    galinha.vx *= -1;
+                    galinha.x = Math.max(rect.left, Math.min(rect.right - 60, galinha.x));
+                }
+                if (galinha.y <= rect.top || galinha.y >= rect.bottom - 60) {
+                    galinha.vy *= -1;
+                    galinha.y = Math.max(rect.top, Math.min(rect.bottom - 60, galinha.y));
+                }
+
+                // Mudança aleatória de direção ocasionalmente
+                if (Math.random() < 0.01) {
+                    galinha.vx = (Math.random() - 0.5) * 3;
+                    galinha.vy = (Math.random() - 0.5) * 3;
+                }
+
+                // Atualiza posição no DOM
+                galinha.elemento.style.left = galinha.x + 'px';
+                galinha.elemento.style.top = galinha.y + 'px';
+
+                // Verifica se é hora de rir
+                if (agora >= galinha.proximaRisada) {
+                    fazerGalinhaRir(galinha.elemento);
+                    galinha.proximaRisada = agora + Math.random() * 4000 + 3000;
+                }
+            });
+
+            requestAnimationFrame(animarGalinhas);
+        }
+
+        // Função para fazer a galinha dar risadinha
+        function fazerGalinhaRir(galinhaElemento) {
+            const risada = document.createElement('div');
+            risada.className = 'risadinha';
+            risada.textContent = RISADINHAS[Math.floor(Math.random() * RISADINHAS.length)];
+            
+            // Posiciona a risada acima da galinha
+            const galinhaRect = galinhaElemento.getBoundingClientRect();
+            risada.style.left = (galinhaRect.left + galinhaRect.width / 2 - 30) + 'px';
+            risada.style.top = (galinhaRect.top - 50) + 'px';
+            
+            document.body.appendChild(risada);
+            
+            // Remove risada após animação
+            setTimeout(() => {
+                if (risada.parentNode) {
+                    risada.parentNode.removeChild(risada);
+                }
+            }, 2000);
+        }
+
+        function mostrarMensagem() {
+            if (mensagemAtual) return;
+
+            const mensagem = document.createElement('div');
+            mensagem.className = 'mensagem';
+            
+            const mensagemTexto = MENSAGENS_AMOR[Math.floor(Math.random() * MENSAGENS_AMOR.length)];
+            mensagem.innerHTML = `
+                <button class="botao-fechar" onclick="fecharMensagem()">&times;</button>
+                <p>${mensagemTexto}</p>
+            `;
+            
+            document.body.appendChild(mensagem);
+            mensagemAtual = mensagem;
+
+            // Auto-fechar após 4 segundos
+            setTimeout(() => {
+                fecharMensagem();
+            }, 4000);
+        }
+
+        // Função para fechar mensagem
+        function fecharMensagem() {
+            if (mensagemAtual) {
+                mensagemAtual.style.animation = 'aparecerMensagem 0.3s ease-out reverse';
+                setTimeout(() => {
+                    if (mensagemAtual && mensagemAtual.parentNode) {
+                        mensagemAtual.parentNode.removeChild(mensagemAtual);
+                    }
+                    mensagemAtual = null;
+                }, 300);
+            }
+        }
+
+        // Função para criar corações flutuantes
+        function criarCoracaoFlutuante() {
+            const coracao = document.createElement('div');
+            coracao.className = 'coracao-flutuante';
+            coracao.textContent = '💕';
+            coracao.style.left = Math.random() * window.innerWidth + 'px';
+            document.body.appendChild(coracao);
+
+            setTimeout(() => {
+                if (coracao.parentNode) {
+                    coracao.parentNode.removeChild(coracao);
+                }
+            }, 4000);
+        }
+
+        // Função para mostrar foto especial
+        function mostrarFoto() {
+            const modal = document.createElement('div');
+            modal.className = 'foto-modal';
+            modal.innerHTML = `
+                <div class="foto-placeholder">
+                    <h2>Diga 'X'! 📸</h2>
+                    <img src="img/img.jpeg" alt="Foto Especial">
+                    <br>
+                    <p style="font-size: 0.9em; opacity: 0.8;">
+                        Clique em qualquer lugar para fechar
+                    </p>
+                </div>
+            `;
+            
+            modal.addEventListener('click', () => {
+                document.body.removeChild(modal);
+            });
+            
+            document.body.appendChild(modal);
+        }
+
+        // Event listeners
+        document.getElementById('jardim').addEventListener('click', (e) => {
+            criarFlor(e.clientX, e.clientY);
+        });
+
+        document.getElementById('fotoSecreta').addEventListener('click', (e) => {
+            e.stopPropagation();
+            mostrarFoto();
+        });
+
+        // Função para criar graminhas decorativas
+        function criarGraminhas() {
+            const areaGrama = document.getElementById('areaGrama');
+            const graminhitas = ['🌱', '🌿', '🍀', '🌾'];
+            
+            // Graminhas dentro da área
+            for (let i = 0; i < 15; i++) {
+                const graminha = document.createElement('div');
+                graminha.className = 'graminha';
+                graminha.textContent = graminhitas[Math.floor(Math.random() * graminhitas.length)];
+                graminha.style.left = Math.random() * 85 + '%';
+                graminha.style.top = Math.random() * 85 + '%';
+                areaGrama.appendChild(graminha);
+            }
+        }
+
+        // Função para criar cerquinhas decorativas
+        function criarCerquinhas() {
+            const cerquinhaContainer = document.getElementById('cerquinhaContainer');
+            
+            // Cerquinhas ao redor da grama
+            for (let i = 0; i < 20; i++) {
+                const cerquinha = document.createElement('div');
+                cerquinha.className = 'cerquinha';
+                cerquinha.textContent = CERQUINHAS_EMOJI[Math.floor(Math.random() * CERQUINHAS_EMOJI.length)];
+                
+                // Posiciona as cerquinhas ao redor da borda
+                if (i < 5) {
+                    // Lado superior
+                    cerquinha.style.left = (i * 20) + '%';
+                    cerquinha.style.top = '-15px';
+                } else if (i < 10) {
+                    // Lado direito
+                    cerquinha.style.right = '-15px';
+                    cerquinha.style.top = ((i - 5) * 20) + '%';
+                } else if (i < 15) {
+                    // Lado inferior
+                    cerquinha.style.left = ((14 - i) * 20) + '%';
+                    cerquinha.style.bottom = '-15px';
+                } else {
+                    // Lado esquerdo
+                    cerquinha.style.left = '-15px';
+                    cerquinha.style.top = ((19 - i) * 20) + '%';
+                }
+                
+                cerquinhaContainer.appendChild(cerquinha);
+            }
+        }
+
+        // Inicialização quando a página carrega
+        document.addEventListener('DOMContentLoaded', () => {
+            criarGraminhas();
+            criarCerquinhas();
+            animarGalinhas(); // Inicia o loop de animação das galinhas
+            
+            // Cria corações flutuantes periodicamente
+            setInterval(criarCoracaoFlutuante, 3000);
+        });
+
+        // Previne o menu de contexto no clique direito para melhor experiência
+        document.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+        });
+    </script>
+</body>
+</html>
